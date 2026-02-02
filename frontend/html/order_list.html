@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - OrderTime</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/order_list.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo"><a href="{% url 'home' %}" style="text-decoration: none; color: #667eea;">OrderTime</a></h1>
+                <ul class="nav-menu">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'create_order' %}">New Order</a></li>
+                    <li><a href="{% url 'order_list' %}">My Orders</a></li>
+                    <li><a href="{% url 'logout' %}" class="btn-logout">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="order-list-container">
+            <div class="header-section">
+                <h2>My Orders</h2>
+                <a href="{% url 'create_order' %}" class="btn-new-order">+ New Order</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if orders %}
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ order.item_name }}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td>Rs. {{ order.price }}</td>
+                                <td class="total-price">Rs. {{ order.total }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="{% url 'delete_order' order.id %}" class="btn-delete" data-order-id="{{ order.id }}">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 2rem;">
+                                    No orders yet. <a href="{% url 'create_order' %}">Place your first order</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="summary">
+                <h3>Order Summary</h3>
+                <p>Total Orders: <span id="totalOrders">{{ orders|length }}</span></p>
+                {% if orders %}
+                <p>Grand Total: <span id="grandTotal">Rs. {{ grand_total }}</span></p>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; OrderTime</p>
+    </footer>
+
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/order_list.js' %}"></script>
+</body>
+</html>

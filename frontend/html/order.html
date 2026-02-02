@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order - Restaurant</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/order.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo"><a href="{% url 'home' %}" style="text-decoration: none; color: #667eea;">OrderTime</a></h1>
+                <ul class="nav-menu">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'create_order' %}">New Order</a></li>
+                    <li><a href="{% url 'order_list' %}">My Orders</a></li>
+                    <li><a href="{% url 'logout' %}" class="btn-logout">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="order-form-container">
+            <h2>Create New Order</h2>
+
+            <form id="orderForm">
+                <div class="menu-categories">
+                    <h3>Tea & Coffee</h3>
+                    <div class="menu-items-grid">
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="1" data-price="10" data-name="Black Tea">
+                            <div class="item-details">
+                                <span class="item-name">Black Tea</span>
+                                <span class="item-price">Rs. 10</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="2" data-price="20" data-name="Milk Tea">
+                            <div class="item-details">
+                                <span class="item-name">Milk Tea</span>
+                                <span class="item-price">Rs. 20</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="3" data-price="30" data-name="Black Coffee">
+                            <div class="item-details">
+                                <span class="item-name">Black Coffee</span>
+                                <span class="item-price">Rs. 30</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="4" data-price="40" data-name="Milk Coffee">
+                            <div class="item-details">
+                                <span class="item-name">Milk Coffee</span>
+                                <span class="item-price">Rs. 40</span>
+                            </div>
+                </label>
+                    </div>
+
+                    <h3>Breakfast</h3>
+                    <div class="menu-items-grid">
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="5" data-price="50" data-name="Bread & Tea">
+                            <div class="item-details">
+                                <span class="item-name">Bread & Tea</span>
+                                <span class="item-price">Rs. 50</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="6" data-price="30" data-name="Sel Roti">
+                            <div class="item-details">
+                                <span class="item-name">Sel Roti</span>
+                                <span class="item-price">Rs. 30</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="7" data-price="40" data-name="Chana">
+                            <div class="item-details">
+                                <span class="item-name">Chana</span>
+                                <span class="item-price">Rs. 40</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="8" data-price="20" data-name="Boiled Egg">
+                            <div class="item-details">
+                                <span class="item-name">Boiled Egg</span>
+                                <span class="item-price">Rs. 20</span>
+                            </div>
+                </label>
+                    </div>
+
+                    <h3>Snacks</h3>
+                    <div class="menu-items-grid">
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="9" data-price="60" data-name="Laphing">
+                            <div class="item-details">
+                                <span class="item-name">Laphing</span>
+                                <span class="item-price">Rs. 60</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="10" data-price="100" data-name="Buff. Momo">
+                            <div class="item-details">
+                                <span class="item-name">Buff. Momo</span>
+                                <span class="item-price">Rs. 100</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="11" data-price="80" data-name="Veg. Momo">
+                            <div class="item-details">
+                                <span class="item-name">Veg. Momo</span>
+                                <span class="item-price">Rs. 80</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="12" data-price="120" data-name="Chicken Momo">
+                            <div class="item-details">
+                                <span class="item-name">Chicken Momo</span>
+                                <span class="item-price">Rs. 120</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="13" data-price="150" data-name="BURGER">
+                            <div class="item-details">
+                                <span class="item-name">BURGER</span>
+                                <span class="item-price">Rs. 150</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="14" data-price="200" data-name="Small Pizza">
+                            <div class="item-details">
+                                <span class="item-name">Small Pizza</span>
+                                <span class="item-price">Rs. 200</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="15" data-price="350" data-name="Large Pizza">
+                            <div class="item-details">
+                                <span class="item-name">Large Pizza</span>
+                                <span class="item-price">Rs. 350</span>
+                            </div>
+                </label>
+                    </div>
+
+                    <h3>Lunch & Dinner</h3>
+                    <div class="menu-items-grid">
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="16" data-price="150" data-name="Veg. Khana">
+                            <div class="item-details">
+                                <span class="item-name">Veg. Khana</span>
+                                <span class="item-price">Rs. 150</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="17" data-price="200" data-name="Chicken Khana">
+                            <div class="item-details">
+                                <span class="item-name">Chicken Khana</span>
+                                <span class="item-price">Rs. 200</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="18" data-price="250" data-name="Mutton Khana">
+                            <div class="item-details">
+                                <span class="item-name">Mutton Khana</span>
+                                <span class="item-price">Rs. 250</span>
+                            </div>
+                </label>
+                    </div>
+
+                    <h3>Curry</h3>
+                    <div class="menu-items-grid">
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="19" data-price="100" data-name="Veg. Curry">
+                            <div class="item-details">
+                                <span class="item-name">Veg. Curry</span>
+                                <span class="item-price">Rs. 100</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="20" data-price="120" data-name="Egg Curry">
+                            <div class="item-details">
+                                <span class="item-name">Egg Curry</span>
+                                <span class="item-price">Rs. 120</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="21" data-price="180" data-name="Chicken Curry">
+                            <div class="item-details">
+                                <span class="item-name">Chicken Curry</span>
+                                <span class="item-price">Rs. 180</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="22" data-price="220" data-name="Mutton Curry">
+                            <div class="item-details">
+                                <span class="item-name">Mutton Curry</span>
+                                <span class="item-price">Rs. 220</span>
+                            </div>
+                </label>
+                    </div>
+
+                    <h3>Bread & Rotis</h3>
+                    <div class="menu-items-grid">
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="23" data-price="15" data-name="Normal Bread">
+                            <div class="item-details">
+                                <span class="item-name">Normal Bread</span>
+                                <span class="item-price">Rs. 15</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="24" data-price="20" data-name="Roti">
+                            <div class="item-details">
+                                <span class="item-name">Roti</span>
+                                <span class="item-price">Rs. 20</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="25" data-price="30" data-name="Naan">
+                            <div class="item-details">
+                                <span class="item-name">Naan</span>
+                                <span class="item-price">Rs. 30</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="26" data-price="40" data-name="Butter Naan">
+                            <div class="item-details">
+                                <span class="item-name">Butter Naan</span>
+                                <span class="item-price">Rs. 40</span>
+                            </div>
+                </label>
+                    </div>
+
+                    <h3>Cold Drinks</h3>
+                    <div class="menu-items-grid">
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="27" data-price="50" data-name="Coca Cola">
+                            <div class="item-details">
+                                <span class="item-name">Coca Cola</span>
+                                <span class="item-price">Rs. 50</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="28" data-price="50" data-name="Pepsi">
+                            <div class="item-details">
+                                <span class="item-name">Pepsi</span>
+                                <span class="item-price">Rs. 50</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="29" data-price="50" data-name="Sprite">
+                            <div class="item-details">
+                                <span class="item-name">Sprite</span>
+                                <span class="item-price">Rs. 50</span>
+                            </div>
+                </label>
+                        <label class="menu-item-card">
+                            <input type="checkbox" name="item" value="30" data-price="50" data-name="Mountain Dew">
+                            <div class="item-details">
+                                <span class="item-name">Mountain Dew</span>
+                                <span class="item-price">Rs. 50</span>
+                            </div>
+                </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Selected Items</label>
+                    <div id="selectedItems" class="selected-items-display"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Price</label>
+                    <div id="totalPrice" class="total-display">Rs. 0</div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-submit">Proceed to Quantity</button>
+                    <a href="{% url 'order_list' %}" class="btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Restaurant Order Management System | Built with ❤️</p>
+    </footer>
+
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/order.js' %}"></script>
+</body>
+</html>

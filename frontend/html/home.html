@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderTime - Welcome</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo"><a href="{% url 'home' %}" style="text-decoration: none; color: #667eea;">OrderTime</a></h1>
+                <ul class="nav-menu">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'create_order' %}">New Order</a></li>
+                    <li><a href="{% url 'order_list' %}">My Orders</a></li>
+                    <li><a href="{% url 'logout' %}" class="btn-logout">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="home-container">
+            <div class="welcome-card">
+                <h1 class="main-title">Welcome to OrderTime</h1>
+                <p class="subtitle">Where Your Order is Placed</p>
+                
+                <div class="action-section">
+                    <a href="{% url 'create_order' %}" class="btn-place-order">Place Order</a>
+                </div>
+
+                <div class="info-section">
+                    <p class="info-text">Quick and easy ordering at your fingertips</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 OrderTime - Web Application Programming</p>
+    </footer>
+
+    <script src="{% static 'js/base.js' %}"></script>
+</body>
+</html>
