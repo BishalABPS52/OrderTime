@@ -59,8 +59,6 @@ ORDERS = []
 order_id_counter = 1
 
 
-# ==================== HOME PAGE ====================
-
 def home_view(request):
     """Homepage with OrderTime welcome message and Place Order button"""
     return render(request, 'home.html')
@@ -70,8 +68,6 @@ def quantity_view(request):
     """Quantity adjustment page"""
     return render(request, 'quantity.html')
 
-
-# ==================== CRUD (ORDERS) ====================
 
 def create_order(request):
     username = 'Guest'
