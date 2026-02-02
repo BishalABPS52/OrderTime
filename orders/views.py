@@ -6,7 +6,7 @@ from .models import MenuItem, Order
 from .forms import OrderForm
 
 
-# ==================== AUTHENTICATION ====================
+
 
 def login_view(request):
     if request.method == "POST":
@@ -26,15 +26,11 @@ def logout_view(request):
     return redirect('login')
 
 
-# ==================== MENU ====================
-
 @login_required
 def menu(request):
     items = MenuItem.objects.all()
     return render(request, 'menu.html', {'items': items})
 
-
-# ==================== CRUD (ORDERS) ====================
 
 @login_required
 def create_order(request):
