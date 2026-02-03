@@ -1,11 +1,19 @@
 // Quantity page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (!isLoggedIn) {
+        alert('Please login first');
+        window.location.href = 'login.html';
+        return;
+    }
+    
     // Load pending order from sessionStorage
     const pendingOrder = JSON.parse(sessionStorage.getItem('pendingOrder') || '[]');
     
     if (pendingOrder.length === 0) {
-        alert('No items in cart. Redirecting to menu...');
-        window.location.href = '/create/';
+        alert('No items in cart. Redirecting to order page...');
+        window.location.href = 'order.html';
         return;
     }
     
@@ -97,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     // Check if no items left
                     if (document.querySelectorAll('.item-row').length === 0) {
-                        alert('No items in cart. Redirecting to menu...');
-                        window.location.href = '/create/';
+                        alert('No items in cart. Redirecting to order page...');
+                        window.location.href = 'order.html';
                     }
                 }, 300);
             }
@@ -121,33 +129,60 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Send each item to Django backend
+        console.log('Finalizing orders:', items);
+        
+        // Send each item to backend API
         const orderPromises = items.map(item => {
-            const formData = new FormData();
-            formData.append('item_name', item.name);
-            formData.append('quantity', item.quantity);
-            formData.append('price', item.price);
-            formData.append('csrfmiddlewaretoken', getCookie('csrftoken'));
-            
-            return fetch('/create/', {
+            console.log('Creating order:', item);
+            return fetch('http://localhost:8000/api/orders/create/', {
                 method: 'POST',
-                body: formData,
-                credentials: 'include',
                 headers: {
-                    'X-CSRFToken': getCookie('csrftoken')
-                }
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    item_name: item.name,
+                    quantity: item.quantity,
+                    price: item.price
+                })
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data);
+                return data;
             });
         });
         
         Promise.all(orderPromises)
-            .then(() => {
-                sessionStorage.removeItem('pendingOrder');
-                alert('Orders placed successfully!');
-                window.location.href = '/orders/';
+            .then(results => {
+                console.log('All results:', results);
+                // Check if all orders succeeded
+                const allSuccess = results.every(result => result.id || result.success !== false);
+                if (allSuccess) {
+                    sessionStorage.removeItem('pendingOrder');
+                    alert('Orders placed successfully!');
+                    window.location.href = 'order_list.html';
+                } else {
+                    console.error('Some orders failed:', results);
+                    // Check if any failed due to auth
+                    const hasAuthError = results.some(result => result.error && result.error.includes('Authentication'));
+                    if (hasAuthError) {
+                        localStorage.clear();
+                        alert('Session expired. Please login again.');
+                        window.location.href = 'login.html';
+                    } else {
+                        alert('Some orders failed. Please try again.');
+                    }
+                }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('Failed to place orders. Please try again.');
+                console.error('Error placing orders:', error);
+                localStorage.clear();
+                alert('Failed to place orders. Please login again.');
+                window.location.href = 'login.html';
             });
     });
     

@@ -1,23 +1,22 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adjust Quantity - OrderTime</title>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/quantity.css' %}">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/quantity.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="nav-container">
-                <h1 class="logo"><a href="{% url 'home' %}" style="text-decoration: none; color: #667eea;">OrderTime</a></h1>
+                <h1 class="logo"><a href="home.html" style="text-decoration: none; color: #667eea;">OrderTime</a></h1>
                 <ul class="nav-menu">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'create_order' %}">New Order</a></li>
-                    <li><a href="{% url 'order_list' %}">My Orders</a></li>
-                    <li><a href="{% url 'logout' %}" class="btn-logout">Logout</a></li>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="order.html">New Order</a></li>
+                    <li><a href="order_list.html">My Orders</a></li>
+                    <li><a href="#" id="logoutBtn" class="btn-logout">Logout</a></li>
                 </ul>
             </div>
         </nav>
@@ -45,16 +44,16 @@
 
             <div class="button-group">
                 <button class="btn-finalize" id="btnFinalize">Finalize Order</button>
-                <a href="{% url 'create_order' %}" class="btn-cancel">Cancel</a>
+                <a href="order.html" class="btn-cancel">Cancel</a>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2026 OrderTime - Web Application Programming</p>
+        <p>&copy; 2026 OrderTime</p>
     </footer>
 
-    <script src="{% static 'js/base.js' %}"></script>
-    <script src="{% static 'js/quantity.js' %}"></script>
+    <script src="../js/base.js"></script>
+    <script src="../js/quantity.js"></script>
 </body>
 </html>

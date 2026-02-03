@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Store in sessionStorage and redirect to quantity page
             sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
-            window.location.href = '/quantity/';
+            window.location.href = 'quantity.html';
         });
     }
     
