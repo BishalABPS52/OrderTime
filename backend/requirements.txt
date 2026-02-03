@@ -1,4 +1,10 @@
 # Django Requirements
 django>=6.0.0
 
-# No database drivers needed - using in-memory storage
+# Django REST Framework for API development
+djangorestframework>=3.14.0
+
+# CORS support for frontend-backend communication
+django-cors-headers>=4.0.0
+
+# No additional database drivers needed - using SQLite (built-in)

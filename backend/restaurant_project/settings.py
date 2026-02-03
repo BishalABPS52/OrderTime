@@ -25,23 +25,36 @@ SECRET_KEY = 'django-insecure-2y-zl)=na8a)&vhf%7xy@*y4&5t6)ci#x@%c^i_x8fpa+837$9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Django built-in apps
+    'django.contrib.admin',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sessions',  # Required for session authentication
+    'django.contrib.messages',  # Required for admin
     'django.contrib.staticfiles',
 
+    # Third-party apps
+    'corsheaders',  # CORS support for API
+    'rest_framework',  # Django REST Framework
+
+    # Our apps
     'orders', 
 ]
 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -55,6 +68,8 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',  # Required for admin
+                'django.contrib.messages.context_processors.messages',  # Required for admin
             ],
         },
     },
@@ -63,10 +78,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'restaurant_project.wsgi.application'
 
 
-# Database - Disabled (using in-memory storage)
+# Database - Using SQLite for local development
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -115,3 +135,62 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Login URL
 LOGIN_URL = '/'
+
+# ==================== DJANGO REST FRAMEWORK ====================
+# Configuration for Django REST Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'orders.authentication.CsrfExemptSessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+}
+
+# Disable CSRF for API endpoints
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
+
+# ==================== CORS AND CSRF SETTINGS ====================
+# Allow frontend to access backend APIs
+
+# CORS Configuration
+CORS_ALLOW_ALL_ORIGINS = True  # For development only
+CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be sent
+
+# Specific origins (more secure for production)
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+
+# Session cookie settings - Important for CORS
+SESSION_COOKIE_SAMESITE = 'Lax'  # Works with same-site requests
+SESSION_COOKIE_SECURE = False   # Set to True in production with HTTPS
+SESSION_COOKIE_HTTPONLY = True  # Security: prevent JavaScript access
+SESSION_COOKIE_AGE = 86400  # 24 hours
+SESSION_SAVE_EVERY_REQUEST = True  # Keep session alive
+SESSION_COOKIE_DOMAIN = None  # Allow localhost
+
+# CSRF settings for API requests
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = False  # Set to True in production
+CSRF_COOKIE_HTTPONLY = False  # Frontend needs to read CSRF token
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000', 
+    'http://127.0.0.1:8000',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
+
+# Disable CSRF for API endpoints (using session auth instead)
+CSRF_COOKIE_NAME = 'csrftoken'
